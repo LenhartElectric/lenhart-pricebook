@@ -1157,8 +1157,9 @@
 
             // Render upsells if available
             const upsellsEl = document.getElementById('detailUpsells');
-            if (pkg.upsells && pkg.upsells.length > 0) {
-                const upsellPkgs = pkg.upsells.map(id => {
+            const upsellIds = pkg.upsells || pkg.upsellTo || [];
+            if (upsellIds.length > 0) {
+                const upsellPkgs = upsellIds.map(id => {
                     for (const cat of pricebookData.categories) {
                         const found = cat.packages.find(p => p.id === id);
                         if (found) return found;
