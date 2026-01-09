@@ -63,17 +63,66 @@ git add . && git commit -m "Update prices" && git push
 
 ```
 lenhart-pricebook/
-├── index.html          # Technician-facing app
+├── index.html          # Technician-facing app (lifestyle presentation)
 ├── admin.html          # Admin dashboard for updates
 ├── data/
 │   └── pricebook.json  # Package data (auto-generated)
 ├── scripts/
 │   └── import-crm.py   # NetSuite XML/CSV converter
 ├── images/
-│   └── icon.svg        # App icon
+│   ├── icon.svg        # App icon
+│   ├── logo.png        # Lenhart Electric logo
+│   └── heroes/         # Category hero images (lifestyle photos)
 ├── manifest.json       # PWA manifest
 └── sw.js               # Service worker for offline
 ```
+
+## Adding Hero Images
+
+The app supports lifestyle/hero images for each category. To add images:
+
+1. Add images to `images/heroes/` with these filenames:
+   - `bathrooms.jpg`
+   - `ceiling-fans.jpg`
+   - `ev-charging.jpg`
+   - `exterior-lighting.jpg`
+   - `exterior-outlets.jpg`
+   - `heavy-duty-circuits.jpg`
+   - `generators.jpg`
+   - `hot-tub.jpg`
+   - `interior-lighting.jpg`
+   - `led-tape.jpg`
+   - `outlets-switches.jpg`
+   - `panel-upgrades.jpg`
+   - `portable-generator.jpg`
+   - `recessed-lighting.jpg`
+   - `service-upgrades.jpg`
+   - `smoke-detectors.jpg`
+   - `surge-protection.jpg`
+   - `whole-home-rewire.jpg`
+
+2. Recommended image specs:
+   - **Size**: 1200x600px or similar 2:1 aspect ratio
+   - **Format**: JPG (optimized for web)
+   - **Style**: Lifestyle photos showing the service in a home setting
+
+3. If an image is missing, the app shows a gradient background - no errors.
+
+## Adding Package Images
+
+You can add product images to individual packages:
+
+1. Add images to `images/products/` folder
+2. Update `data/pricebook.json` to include image URLs:
+   ```json
+   {
+     "name": "AMSFL_EV CHARGER",
+     "image": "images/products/ev-charger.jpg",
+     ...
+   }
+   ```
+
+Without images, packages display the Lenhart Electric logo placeholder.
 
 ## Brand Colors
 
