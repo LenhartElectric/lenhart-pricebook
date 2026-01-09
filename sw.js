@@ -1,12 +1,12 @@
 // Service Worker for Lenhart Price Book PWA
-const CACHE_NAME = 'lenhart-pricebook-v1';
+const CACHE_NAME = 'lenhart-pricebook-v2';
 
-// Files to cache for offline use
+// Files to cache for offline use (relative paths for GitHub Pages compatibility)
 const STATIC_ASSETS = [
-  '/',
-  '/index.html',
-  '/data/pricebook.json',
-  '/manifest.json'
+  './',
+  './index.html',
+  './data/pricebook.json',
+  './manifest.json'
 ];
 
 // Install event - cache static assets
@@ -61,7 +61,7 @@ self.addEventListener('fetch', (event) => {
     }).catch(() => {
       // If both cache and network fail, return offline page for navigation
       if (event.request.mode === 'navigate') {
-        return caches.match('/index.html');
+        return caches.match('./index.html');
       }
       return new Response('Offline', { status: 503 });
     })
