@@ -219,6 +219,30 @@
             display: block;
         }
 
+        .category-hero-setting {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            background: #f9f9f9;
+            border-bottom: 2px solid #eee;
+        }
+
+        .category-hero-setting label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #666;
+            white-space: nowrap;
+        }
+
+        .category-hero-setting input {
+            flex: 1;
+            padding: 0.375rem 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.75rem;
+        }
+
         .package-row {
             padding: 0.75rem 1rem;
             border-bottom: 1px solid #eee;
@@ -277,6 +301,52 @@
 
         .upsell-tag-remove:hover {
             color: #dc2626;
+        }
+
+        .package-image-row {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+            padding-left: 1rem;
+        }
+
+        .package-image-row:empty {
+            display: none;
+        }
+
+        .package-image-preview {
+            width: 40px;
+            height: 40px;
+            border-radius: 4px;
+            object-fit: cover;
+            background: #f0f0f0;
+        }
+
+        .package-image-input {
+            flex: 1;
+            padding: 0.25rem 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.75rem;
+        }
+
+        .package-image-input::placeholder {
+            color: #999;
+        }
+
+        .image-btn {
+            padding: 0.25rem 0.5rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 0.6875rem;
+            cursor: pointer;
+            background: var(--blue);
+            color: white;
+        }
+
+        .image-btn.remove {
+            background: #ef4444;
         }
 
         .package-row .name {
@@ -514,6 +584,10 @@
             <div class="stat-card">
                 <div class="value" id="upsellsConfigured">0</div>
                 <div class="label">Upsells Set</div>
+            </div>
+            <div class="stat-card">
+                <div class="value" id="imagesSet">0</div>
+                <div class="label">Images Set</div>
             </div>
         </div>
 
@@ -786,12 +860,15 @@
             let totalPackages = 0;
             let assignedTiers = 0;
             let upsellsConfigured = 0;
+            let imagesSet = 0;
 
             pricebookData.categories.forEach(cat => {
+                if (cat.heroImage) imagesSet++;
                 cat.packages.forEach(pkg => {
                     totalPackages++;
                     if (pkg.tier) assignedTiers++;
                     if (pkg.upsellTo && pkg.upsellTo.length > 0) upsellsConfigured++;
+                    if (pkg.image) imagesSet++;
                 });
             });
 
@@ -799,6 +876,7 @@
             document.getElementById('totalCategories').textContent = pricebookData.categories.length;
             document.getElementById('assignedTiers').textContent = assignedTiers;
             document.getElementById('upsellsConfigured').textContent = upsellsConfigured;
+            document.getElementById('imagesSet').textContent = imagesSet;
 
             // Update category filter
             const categoryFilter = document.getElementById('categoryFilter');
@@ -836,9 +914,17 @@
                             ${tierCounts.best ? `<span class="tier-badge best">${tierCounts.best} Best</span>` : ''}
                             ${tierCounts.premium ? `<span class="tier-badge premium">${tierCounts.premium} Premium</span>` : ''}
                             ${tierCounts.value ? `<span class="tier-badge value">${tierCounts.value} Value</span>` : ''}
+                            ${cat.heroImage ? `<span class="tier-badge" style="background:#666;">📷</span>` : ''}
                         </div>
                     </div>
                     <div class="category-packages" id="cat-${catIndex}">
+                        <div class="category-hero-setting" onclick="event.stopPropagation()">
+                            <label>Hero Image URL:</label>
+                            <input type="text" placeholder="Paste hero image URL for ${cat.name}"
+                                   value="${cat.heroImage || ''}"
+                                   onchange="setCategoryHeroImage('${cat.name}', this.value)">
+                            ${cat.heroImage ? `<img src="${cat.heroImage}" style="height:40px;border-radius:4px;" onerror="this.style.display='none'">` : ''}
+                        </div>
                         ${cat.packages.map((pkg, pkgIndex) => renderPackageRow(pkg, catIndex, pkgIndex)).join('')}
                     </div>
                 `;
@@ -870,6 +956,18 @@
                 }
             }
 
+            // Build image row
+            const imageRow = `
+                <div class="package-image-row">
+                    ${pkg.image ? `<img src="${pkg.image}" class="package-image-preview" onerror="this.style.display='none'">` : ''}
+                    <input type="text" class="package-image-input" placeholder="Image URL (paste link or path)"
+                           value="${pkg.image || ''}"
+                           onchange="setPackageImage('${pkg.id}', this.value)"
+                           onblur="setPackageImage('${pkg.id}', this.value)">
+                    ${pkg.image ? `<button class="image-btn remove" onclick="setPackageImage('${pkg.id}', '')">Remove</button>` : ''}
+                </div>
+            `;
+
             return `
                 <div class="package-row" data-id="${pkg.id}" data-tier="${pkg.tier || ''}">
                     <div class="package-row-main">
@@ -895,6 +993,7 @@
                         </select>
                     </div>
                     ${upsellTags}
+                    ${imageRow}
                 </div>
             `;
         }
@@ -949,6 +1048,30 @@
                 renderData();
                 saveToStorage();
                 showToast('Upsell removed', true);
+            }
+        }
+
+        function setPackageImage(packageId, imageUrl) {
+            const pkg = findPackage(packageId);
+            if (pkg) {
+                pkg.image = imageUrl.trim() || null;
+                renderData();
+                saveToStorage();
+                if (imageUrl) {
+                    showToast('Image added!', true);
+                }
+            }
+        }
+
+        function setCategoryHeroImage(categoryName, imageUrl) {
+            const cat = pricebookData.categories.find(c => c.name === categoryName);
+            if (cat) {
+                cat.heroImage = imageUrl.trim() || null;
+                renderData();
+                saveToStorage();
+                if (imageUrl) {
+                    showToast('Hero image set!', true);
+                }
             }
         }
 

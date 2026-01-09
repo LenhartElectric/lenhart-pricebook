@@ -1097,11 +1097,16 @@
 
         function renderPackageCard(pkg) {
             const inQuote = quote.some(item => item.id === pkg.id);
+            const imageHtml = pkg.image
+                ? `<img src="${pkg.image}" alt="${pkg.displayName}" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">`
+                : '';
+            const placeholderStyle = pkg.image ? 'style="display:none"' : '';
 
             return `
                 <div class="package-card ${inQuote ? 'in-cart' : ''}" data-id="${pkg.id}">
                     <div class="package-image" onclick="openDetailModal('${pkg.id}')">
-                        <svg class="placeholder-logo" viewBox="0 0 512 512">
+                        ${imageHtml}
+                        <svg class="placeholder-logo" ${placeholderStyle} viewBox="0 0 512 512">
                             <rect width="512" height="512" rx="80" fill="#6d7b8a"/>
                             <path d="M280 80L180 250h100l-40 180 140-210H280l40-140z" fill="#c4a35a"/>
                         </svg>
@@ -1162,9 +1167,15 @@
             currentPackage = pkg;
             const inQuote = quote.some(item => item.id === pkg.id);
 
+            const detailImageHtml = pkg.image
+                ? `<img src="${pkg.image}" alt="${pkg.displayName}" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">`
+                : '';
+            const detailPlaceholderStyle = pkg.image ? 'style="display:none"' : '';
+
             document.getElementById('detailImage').innerHTML = `
                 <button class="detail-close" onclick="closeDetailModal()">&times;</button>
-                <svg class="placeholder-logo" viewBox="0 0 512 512">
+                ${detailImageHtml}
+                <svg class="placeholder-logo" ${detailPlaceholderStyle} viewBox="0 0 512 512">
                     <rect width="512" height="512" rx="80" fill="#6d7b8a"/>
                     <path d="M280 80L180 250h100l-40 180 140-210H280l40-140z" fill="#c4a35a"/>
                 </svg>
@@ -1276,10 +1287,17 @@
             if (quote.length === 0) {
                 itemsEl.innerHTML = `<div class="empty-state"><p>No items selected</p></div>`;
             } else {
-                itemsEl.innerHTML = quote.map(item => `
+                itemsEl.innerHTML = quote.map(item => {
+                    const quoteImageHtml = item.image
+                        ? `<img src="${item.image}" alt="${item.displayName}" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">`
+                        : '';
+                    const quotePlaceholderStyle = item.image ? 'style="display:none"' : '';
+
+                    return `
                     <div class="quote-item">
                         <div class="quote-item-image">
-                            <svg class="mini-logo" viewBox="0 0 512 512">
+                            ${quoteImageHtml}
+                            <svg class="mini-logo" ${quotePlaceholderStyle} viewBox="0 0 512 512">
                                 <rect width="512" height="512" rx="80" fill="#6d7b8a"/>
                                 <path d="M280 80L180 250h100l-40 180 140-210H280l40-140z" fill="#c4a35a"/>
                             </svg>
@@ -1290,7 +1308,7 @@
                         <div class="quote-item-price">$${item.price.toLocaleString()}</div>
                         <button class="quote-item-remove" onclick="toggleQuote('${item.id}')">&times;</button>
                     </div>
-                `).join('');
+                `}).join('');
             }
         }
 
