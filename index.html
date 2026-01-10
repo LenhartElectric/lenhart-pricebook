@@ -592,99 +592,50 @@
             margin-bottom: 0.75rem;
         }
 
-        /* Tier Group Entry Card */
-        .tier-group-card {
-            background: linear-gradient(135deg, var(--gray) 0%, var(--gray-dark) 100%);
-            border-radius: var(--radius);
-            overflow: hidden;
-            box-shadow: var(--shadow);
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .tier-group-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
-        }
-
-        .tier-group-card-header {
-            padding: 1rem;
-            color: white;
-            text-align: center;
-        }
-
-        .tier-group-card-title {
-            font-size: 0.9375rem;
-            font-weight: 600;
-            margin-bottom: 0.25rem;
-        }
-
-        .tier-group-card-subtitle {
-            font-size: 0.75rem;
-            opacity: 0.9;
-        }
-
-        .tier-group-card-tiers {
+        /* Package Card Action Buttons Row */
+        .package-actions {
             display: flex;
-            justify-content: center;
-            gap: 0.5rem;
-            padding: 0.75rem;
-            background: rgba(255,255,255,0.1);
-        }
-
-        .tier-group-card-tier {
-            padding: 0.25rem 0.5rem;
-            border-radius: 4px;
-            font-size: 0.625rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            color: white;
-        }
-
-        .tier-group-card-tier.good { background: var(--good); }
-        .tier-group-card-tier.better { background: var(--better); }
-        .tier-group-card-tier.best { background: var(--best); }
-
-        .tier-group-card-body {
-            background: white;
-            padding: 1rem;
-            text-align: center;
-        }
-
-        .tier-group-card-price {
-            font-size: 0.8125rem;
-            color: var(--text-light);
-            margin-bottom: 0.5rem;
-        }
-
-        .tier-group-card-price strong {
-            color: var(--gold);
-            font-size: 1.125rem;
-        }
-
-        .tier-group-card-btn {
-            display: inline-flex;
-            align-items: center;
             gap: 0.375rem;
-            padding: 0.5rem 1rem;
-            border: 2px solid var(--blue);
-            border-radius: 20px;
+            margin-top: 0.5rem;
+        }
+
+        .package-action-btn {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.25rem;
+            padding: 0.5rem 0.375rem;
+            border: 1.5px solid var(--blue);
+            border-radius: 6px;
             background: transparent;
             color: var(--blue);
-            font-size: 0.75rem;
+            font-size: 0.625rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s;
+            white-space: nowrap;
         }
 
-        .tier-group-card-btn:hover {
+        .package-action-btn:hover {
             background: var(--blue);
             color: white;
         }
 
-        .tier-group-card-btn svg {
-            width: 14px;
-            height: 14px;
+        .package-action-btn.pairs-btn {
+            border-color: var(--gold);
+            color: #996f1f;
+        }
+
+        .package-action-btn.pairs-btn:hover {
+            background: var(--gold);
+            color: white;
+        }
+
+        .package-action-btn svg {
+            width: 12px;
+            height: 12px;
+            flex-shrink: 0;
         }
 
         /* Compare Options Button (for detail modal) */
@@ -714,6 +665,131 @@
         .compare-btn svg {
             width: 14px;
             height: 14px;
+        }
+
+        /* Pairs With Modal */
+        .pairs-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            z-index: 350;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+            padding: 1rem;
+        }
+
+        .pairs-modal.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .pairs-content {
+            background: var(--white);
+            width: 100%;
+            max-width: 400px;
+            max-height: 80vh;
+            border-radius: var(--radius);
+            overflow: hidden;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .pairs-modal.open .pairs-content {
+            transform: scale(1);
+        }
+
+        .pairs-header {
+            background: linear-gradient(135deg, var(--gold) 0%, #b8943f 100%);
+            color: white;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .pairs-header h3 {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .pairs-close {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: none;
+            font-size: 1.25rem;
+            cursor: pointer;
+        }
+
+        .pairs-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem;
+        }
+
+        .pairs-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            background: #f9f9f9;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .pairs-item:hover {
+            background: #f0f0f0;
+        }
+
+        .pairs-item-info {
+            flex: 1;
+        }
+
+        .pairs-item-name {
+            font-weight: 500;
+            font-size: 0.875rem;
+            margin-bottom: 0.125rem;
+        }
+
+        .pairs-item-price {
+            color: var(--gold);
+            font-weight: 600;
+            font-size: 0.9375rem;
+        }
+
+        .pairs-item-add {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: 2px solid var(--blue);
+            background: transparent;
+            color: var(--blue);
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .pairs-item-add:hover {
+            background: var(--blue);
+            color: white;
+        }
+
+        .pairs-empty {
+            text-align: center;
+            color: var(--text-light);
+            padding: 2rem 1rem;
         }
 
         /* Detail Compare Button */
@@ -1251,6 +1327,17 @@
         </div>
     </div>
 
+    <!-- Pairs With Modal -->
+    <div class="pairs-modal" id="pairsModal" onclick="closePairsModal(event)">
+        <div class="pairs-content" onclick="event.stopPropagation()">
+            <div class="pairs-header">
+                <h3 id="pairsTitle">Pairs With</h3>
+                <button class="pairs-close" onclick="closePairsModal()">&times;</button>
+            </div>
+            <div class="pairs-body" id="pairsBody"></div>
+        </div>
+    </div>
+
     <div class="toast" id="toast"></div>
 
     <script>
@@ -1395,53 +1482,6 @@
 
             const heroImage = category.heroImage || categoryHeroImages[name] || '';
 
-            // Get packages with good/better/best tiers (these form a comparison group)
-            const tieredPkgs = category.packages.filter(p =>
-                p.tier === 'good' || p.tier === 'better' || p.tier === 'best'
-            );
-
-            // Only show tier group card if we have 2+ tiered packages
-            const hasTierGroup = tieredPkgs.length >= 2;
-
-            // Get IDs of tiered packages to exclude from regular listing
-            const tieredIds = new Set(tieredPkgs.map(p => p.id));
-
-            // All other packages (not in a tier group)
-            const regularPkgs = category.packages.filter(p => !tieredIds.has(p.id));
-
-            // Build tier group entry card if applicable
-            let tierGroupCardHtml = '';
-            if (hasTierGroup) {
-                const tierOrder = { good: 1, better: 2, best: 3 };
-                tieredPkgs.sort((a, b) => tierOrder[a.tier] - tierOrder[b.tier]);
-                const lowestPrice = Math.min(...tieredPkgs.map(p => p.price));
-                const tiers = [...new Set(tieredPkgs.map(p => p.tier))];
-
-                tierGroupCardHtml = `
-                    <div class="tier-group-card" onclick="openCompareModal('${tieredPkgs[0].id}')">
-                        <div class="tier-group-card-header">
-                            <div class="tier-group-card-title">Compare Options</div>
-                            <div class="tier-group-card-subtitle">${tieredPkgs.length} options available</div>
-                        </div>
-                        <div class="tier-group-card-tiers">
-                            ${tiers.map(t => `<span class="tier-group-card-tier ${t}">${t}</span>`).join('')}
-                        </div>
-                        <div class="tier-group-card-body">
-                            <div class="tier-group-card-price">Starting at <strong>$${lowestPrice.toLocaleString()}</strong></div>
-                            <button class="tier-group-card-btn">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <rect x="3" y="3" width="7" height="7"></rect>
-                                    <rect x="14" y="3" width="7" height="7"></rect>
-                                    <rect x="14" y="14" width="7" height="7"></rect>
-                                    <rect x="3" y="14" width="7" height="7"></rect>
-                                </svg>
-                                View Options
-                            </button>
-                        </div>
-                    </div>
-                `;
-            }
-
             document.getElementById('categoryContent').innerHTML = `
                 <div class="category-hero">
                     <div class="category-hero-image">
@@ -1454,8 +1494,7 @@
                 </div>
                 <div class="category-content">
                     <div class="packages-grid">
-                        ${tierGroupCardHtml}
-                        ${regularPkgs.map(pkg => renderPackageCard(pkg)).join('')}
+                        ${category.packages.map(pkg => renderPackageCard(pkg)).join('')}
                     </div>
                 </div>
             `;
@@ -1467,6 +1506,38 @@
                 ? `<img src="${pkg.image}" alt="${pkg.displayName}" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">`
                 : '';
             const placeholderStyle = pkg.image ? 'style="display:none"' : '';
+            const hasTierGroup = isInTierGroup(pkg.id);
+            const hasUpsells = pkg.upsellTo && pkg.upsellTo.length > 0;
+
+            // Build action buttons
+            let actionButtons = '';
+            if (hasTierGroup || hasUpsells) {
+                actionButtons = `<div class="package-actions">`;
+                if (hasTierGroup) {
+                    actionButtons += `
+                        <button class="package-action-btn" onclick="event.stopPropagation(); openCompareModal('${pkg.id}')">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="3" width="7" height="7"></rect>
+                                <rect x="14" y="3" width="7" height="7"></rect>
+                                <rect x="14" y="14" width="7" height="7"></rect>
+                                <rect x="3" y="14" width="7" height="7"></rect>
+                            </svg>
+                            Options
+                        </button>
+                    `;
+                }
+                if (hasUpsells) {
+                    actionButtons += `
+                        <button class="package-action-btn pairs-btn" onclick="event.stopPropagation(); openPairsModal('${pkg.id}')">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 5v14M5 12h14"></path>
+                            </svg>
+                            Pairs With
+                        </button>
+                    `;
+                }
+                actionButtons += `</div>`;
+            }
 
             return `
                 <div class="package-card ${inQuote ? 'in-cart' : ''}" data-id="${pkg.id}">
@@ -1476,14 +1547,16 @@
                             <rect width="512" height="512" rx="80" fill="#6d7b8a"/>
                             <path d="M280 80L180 250h100l-40 180 140-210H280l40-140z" fill="#c4a35a"/>
                         </svg>
+                        ${pkg.tier ? `<span class="tier-indicator ${pkg.tier}">${pkg.tier}</span>` : ''}
                         <span class="cart-check">✓</span>
                     </div>
                     <div class="package-info">
                         <div class="package-name">${pkg.displayName}</div>
                         <div class="package-price-row">
                             <div class="package-price">$${pkg.price.toLocaleString()}</div>
-                            <button class="add-btn" onclick="toggleQuote('${pkg.id}')">${inQuote ? '✓' : '+'}</button>
+                            <button class="add-btn" onclick="event.stopPropagation(); toggleQuote('${pkg.id}')">${inQuote ? '✓' : '+'}</button>
                         </div>
+                        ${actionButtons}
                     </div>
                 </div>
             `;
@@ -1504,9 +1577,6 @@
             const results = [];
             pricebookData.categories.forEach(cat => {
                 cat.packages.forEach(pkg => {
-                    // Skip packages that are part of a tier group (good/better/best)
-                    if (isInTierGroup(pkg.id)) return;
-
                     if (pkg.name.toLowerCase().includes(query) ||
                         pkg.displayName.toLowerCase().includes(query) ||
                         pkg.description?.toLowerCase().includes(query)) {
@@ -1836,6 +1906,67 @@
             }
 
             showToast('Added to quote!', true);
+        }
+
+        // Pairs With Modal Functions
+        function openPairsModal(packageId) {
+            const pkg = findPackageById(packageId);
+            if (!pkg) return;
+
+            const upsellIds = pkg.upsellTo || [];
+            if (upsellIds.length === 0) {
+                showToast('No paired items configured');
+                return;
+            }
+
+            document.getElementById('pairsTitle').textContent = `Pairs With ${pkg.displayName}`;
+
+            const upsellPkgs = upsellIds.map(id => findPackageById(id)).filter(Boolean);
+
+            const body = document.getElementById('pairsBody');
+            if (upsellPkgs.length === 0) {
+                body.innerHTML = `<div class="pairs-empty">No paired items found</div>`;
+            } else {
+                body.innerHTML = upsellPkgs.map(up => {
+                    const inQuote = quote.some(item => item.id === up.id);
+                    return `
+                        <div class="pairs-item" onclick="openDetailModal('${up.id}'); closePairsModal();">
+                            <div class="pairs-item-info">
+                                <div class="pairs-item-name">${up.displayName}</div>
+                                <div class="pairs-item-price">$${up.price.toLocaleString()}</div>
+                            </div>
+                            <button class="pairs-item-add ${inQuote ? 'selected' : ''}" onclick="event.stopPropagation(); addFromPairs('${up.id}', this)">
+                                ${inQuote ? '✓' : '+'}
+                            </button>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            document.getElementById('pairsModal').classList.add('open');
+        }
+
+        function closePairsModal(e) {
+            if (!e || e.target === document.getElementById('pairsModal')) {
+                document.getElementById('pairsModal').classList.remove('open');
+            }
+        }
+
+        function addFromPairs(packageId, btn) {
+            toggleQuote(packageId);
+            const inQuote = quote.some(item => item.id === packageId);
+            btn.textContent = inQuote ? '✓' : '+';
+            btn.classList.toggle('selected', inQuote);
+            showToast(inQuote ? 'Added to quote!' : 'Removed from quote', inQuote);
+        }
+
+        // Helper to find package by ID
+        function findPackageById(id) {
+            for (const cat of pricebookData.categories) {
+                const pkg = cat.packages.find(p => p.id === id);
+                if (pkg) return pkg;
+            }
+            return null;
         }
     </script>
 </body>
