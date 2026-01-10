@@ -1,5 +1,5 @@
 // Service Worker for Lenhart Price Book PWA
-const CACHE_NAME = 'lenhart-pricebook-v11';
+const CACHE_NAME = 'lenhart-pricebook-v12';
 
 // Files to cache for offline use (relative paths for GitHub Pages compatibility)
 const STATIC_ASSETS = [
