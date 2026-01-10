@@ -592,6 +592,228 @@
             margin-bottom: 0.75rem;
         }
 
+        /* Compare Options Button */
+        .compare-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.375rem;
+            width: 100%;
+            padding: 0.625rem;
+            margin-top: 0.5rem;
+            border: 2px solid var(--blue);
+            border-radius: 8px;
+            background: transparent;
+            color: var(--blue);
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .compare-btn:hover {
+            background: var(--blue);
+            color: white;
+        }
+
+        .compare-btn svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        /* Detail Compare Button */
+        .detail-compare-btn {
+            width: 100%;
+            padding: 0.75rem;
+            margin-top: 0.75rem;
+            border: 2px solid var(--blue);
+            border-radius: var(--radius);
+            background: transparent;
+            color: var(--blue);
+            font-size: 0.9375rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .detail-compare-btn:hover {
+            background: var(--blue);
+            color: white;
+        }
+
+        /* Comparison Modal */
+        .compare-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.7);
+            z-index: 350;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+
+        .compare-modal.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .compare-content {
+            background: var(--white);
+            width: 100%;
+            max-width: 900px;
+            max-height: 90vh;
+            border-radius: var(--radius) var(--radius) 0 0;
+            overflow: hidden;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .compare-modal.open .compare-content {
+            transform: translateY(0);
+        }
+
+        .compare-header {
+            background: linear-gradient(135deg, var(--gray) 0%, var(--gray-dark) 100%);
+            color: white;
+            padding: 1rem 1.25rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .compare-header h2 {
+            font-size: 1.125rem;
+            font-weight: 600;
+        }
+
+        .compare-close {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.15);
+            color: white;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .compare-body {
+            flex: 1;
+            overflow-x: auto;
+            overflow-y: auto;
+            padding: 1rem;
+        }
+
+        .compare-grid {
+            display: flex;
+            gap: 1rem;
+            min-width: min-content;
+        }
+
+        .compare-card {
+            flex: 1;
+            min-width: 240px;
+            max-width: 280px;
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .compare-card.highlight {
+            outline: 3px solid var(--gold);
+            outline-offset: -3px;
+        }
+
+        .compare-card-tier {
+            padding: 0.5rem;
+            text-align: center;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+        }
+
+        .compare-card-tier.good { background: var(--good); color: white; }
+        .compare-card-tier.better { background: var(--better); color: white; }
+        .compare-card-tier.best { background: var(--best); color: white; }
+
+        .compare-card-image {
+            height: 120px;
+            background: linear-gradient(135deg, #f0f0f0 0%, #e0e0e0 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .compare-card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .compare-card-body {
+            padding: 1rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .compare-card-name {
+            font-weight: 600;
+            font-size: 0.9375rem;
+            margin-bottom: 0.5rem;
+            line-height: 1.3;
+        }
+
+        .compare-card-desc {
+            font-size: 0.8125rem;
+            color: var(--text-light);
+            line-height: 1.4;
+            flex: 1;
+            margin-bottom: 1rem;
+        }
+
+        .compare-card-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 0.75rem;
+        }
+
+        .compare-card-select {
+            width: 100%;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            background: var(--blue);
+            color: white;
+            transition: all 0.2s;
+        }
+
+        .compare-card-select:hover {
+            background: var(--blue-light);
+        }
+
+        .compare-card-select.selected {
+            background: var(--good);
+        }
+
+        @media (max-width: 600px) {
+            .compare-card {
+                min-width: 200px;
+            }
+        }
+
         .upsell-item {
             display: flex;
             align-items: center;
@@ -894,6 +1116,7 @@
                 </div>
                 <div class="detail-price" id="detailPrice"></div>
                 <button class="detail-add-btn" id="detailAddBtn" onclick="toggleCartFromDetail()">Add to Quote</button>
+                <div id="detailCompare"></div>
                 <div class="detail-upsells" id="detailUpsells"></div>
             </div>
         </div>
@@ -920,6 +1143,19 @@
         </div>
     </div>
 
+    <!-- Comparison Modal -->
+    <div class="compare-modal" id="compareModal" onclick="closeCompareModal(event)">
+        <div class="compare-content" onclick="event.stopPropagation()">
+            <div class="compare-header">
+                <h2 id="compareTitle">Compare Options</h2>
+                <button class="compare-close" onclick="closeCompareModal()">&times;</button>
+            </div>
+            <div class="compare-body">
+                <div class="compare-grid" id="compareGrid"></div>
+            </div>
+        </div>
+    </div>
+
     <div class="toast" id="toast"></div>
 
     <script>
@@ -929,6 +1165,72 @@
         let currentCategory = null;
         let currentPackage = null;
         let presentMode = false;
+        let tierGroups = {}; // Map of category -> array of packages with good/better/best tiers
+
+        // Merge saved tier/upsell/image data from localStorage (same as admin panel)
+        function mergeSavedData() {
+            const saved = localStorage.getItem('pricebook-admin');
+            if (!saved || !pricebookData) return;
+
+            try {
+                const savedData = JSON.parse(saved);
+                const savedPackages = new Map();
+
+                savedData.categories?.forEach(cat => {
+                    cat.packages?.forEach(pkg => {
+                        savedPackages.set(pkg.id, pkg);
+                    });
+                });
+
+                pricebookData.categories.forEach(cat => {
+                    cat.packages.forEach(pkg => {
+                        const savedPkg = savedPackages.get(pkg.id);
+                        if (savedPkg) {
+                            if (savedPkg.tier) pkg.tier = savedPkg.tier;
+                            if (savedPkg.upsellTo) pkg.upsellTo = savedPkg.upsellTo;
+                            if (savedPkg.image) pkg.image = savedPkg.image;
+                        }
+                    });
+                });
+            } catch (e) {
+                console.log('Could not merge saved data:', e);
+            }
+        }
+
+        // Build tier groups: packages in same category with good/better/best form a group
+        function buildTierGroups() {
+            tierGroups = {};
+
+            pricebookData.categories.forEach(cat => {
+                const tieredPackages = cat.packages.filter(p =>
+                    p.tier === 'good' || p.tier === 'better' || p.tier === 'best'
+                );
+
+                if (tieredPackages.length >= 2) {
+                    // Sort by tier order: good, better, best
+                    const tierOrder = { good: 1, better: 2, best: 3 };
+                    tieredPackages.sort((a, b) => tierOrder[a.tier] - tierOrder[b.tier]);
+
+                    // All packages in this category with tiers form a group
+                    tieredPackages.forEach(pkg => {
+                        tierGroups[pkg.id] = {
+                            category: cat.name,
+                            packages: tieredPackages
+                        };
+                    });
+                }
+            });
+        }
+
+        // Check if a package is part of a tier group
+        function isInTierGroup(packageId) {
+            return tierGroups.hasOwnProperty(packageId);
+        }
+
+        // Get tier group for a package
+        function getTierGroup(packageId) {
+            return tierGroups[packageId] || null;
+        }
 
         const categoryHeroImages = {
             'Ceiling Fans': 'images/heroes/fan1.webp',
@@ -948,6 +1250,13 @@
             try {
                 const response = await fetch('data/pricebook.json');
                 pricebookData = await response.json();
+
+                // Merge saved tier/upsell data from admin panel
+                mergeSavedData();
+
+                // Build tier groups for comparison feature
+                buildTierGroups();
+
                 renderApp();
             } catch (e) {
                 console.error('Failed to load pricebook:', e);
@@ -1093,6 +1402,7 @@
                 ? `<img src="${pkg.image}" alt="${pkg.displayName}" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">`
                 : '';
             const placeholderStyle = pkg.image ? 'style="display:none"' : '';
+            const hasTierGroup = isInTierGroup(pkg.id);
 
             return `
                 <div class="package-card ${inQuote ? 'in-cart' : ''}" data-id="${pkg.id}">
@@ -1102,6 +1412,7 @@
                             <rect width="512" height="512" rx="80" fill="#6d7b8a"/>
                             <path d="M280 80L180 250h100l-40 180 140-210H280l40-140z" fill="#c4a35a"/>
                         </svg>
+                        ${pkg.tier ? `<span class="tier-indicator ${pkg.tier}">${pkg.tier}</span>` : ''}
                         <span class="cart-check">✓</span>
                     </div>
                     <div class="package-info">
@@ -1110,6 +1421,17 @@
                             <div class="package-price">$${pkg.price.toLocaleString()}</div>
                             <button class="add-btn" onclick="toggleQuote('${pkg.id}')">${inQuote ? '✓' : '+'}</button>
                         </div>
+                        ${hasTierGroup ? `
+                        <button class="compare-btn" onclick="event.stopPropagation(); openCompareModal('${pkg.id}')">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="3" width="7" height="7"></rect>
+                                <rect x="14" y="3" width="7" height="7"></rect>
+                                <rect x="14" y="14" width="7" height="7"></rect>
+                                <rect x="3" y="14" width="7" height="7"></rect>
+                            </svg>
+                            Compare Options
+                        </button>
+                        ` : ''}
                     </div>
                 </div>
             `;
@@ -1185,6 +1507,19 @@
             const addBtn = document.getElementById('detailAddBtn');
             addBtn.textContent = inQuote ? '✓ Added to Quote' : 'Add to Quote';
             addBtn.classList.toggle('in-cart', inQuote);
+
+            // Render compare button if package is in a tier group
+            const compareSection = document.getElementById('detailCompare');
+            if (isInTierGroup(pkg.id)) {
+                const tierGroup = getTierGroup(pkg.id);
+                compareSection.innerHTML = `
+                    <button class="detail-compare-btn" onclick="openCompareModal('${pkg.id}')">
+                        Compare ${tierGroup.packages.length} Options
+                    </button>
+                `;
+            } else {
+                compareSection.innerHTML = '';
+            }
 
             // Render upsells if available
             const upsellsEl = document.getElementById('detailUpsells');
@@ -1371,6 +1706,81 @@
             toast.textContent = message;
             toast.className = 'toast show' + (success ? ' success' : '');
             setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        // Compare Modal Functions
+        function openCompareModal(packageId) {
+            const tierGroup = getTierGroup(packageId);
+            if (!tierGroup) return;
+
+            // Close detail modal if open
+            document.getElementById('detailModal').classList.remove('open');
+
+            document.getElementById('compareTitle').textContent = `Compare ${tierGroup.category} Options`;
+
+            const grid = document.getElementById('compareGrid');
+            grid.innerHTML = tierGroup.packages.map(pkg => {
+                const inQuote = quote.some(item => item.id === pkg.id);
+                const isCurrentPkg = pkg.id === packageId;
+                const imageHtml = pkg.image
+                    ? `<img src="${pkg.image}" alt="${pkg.displayName}" onerror="this.style.display='none'">`
+                    : `<svg style="width:50%;height:50%;opacity:0.4" viewBox="0 0 512 512">
+                        <rect width="512" height="512" rx="80" fill="#6d7b8a"/>
+                        <path d="M280 80L180 250h100l-40 180 140-210H280l40-140z" fill="#c4a35a"/>
+                       </svg>`;
+
+                return `
+                    <div class="compare-card ${isCurrentPkg ? 'highlight' : ''}">
+                        <div class="compare-card-tier ${pkg.tier}">${pkg.tier}</div>
+                        <div class="compare-card-image">
+                            ${imageHtml}
+                        </div>
+                        <div class="compare-card-body">
+                            <div class="compare-card-name">${pkg.displayName}</div>
+                            <div class="compare-card-desc">${pkg.description || 'Professional electrical service by Lenhart Electric.'}</div>
+                            <div class="compare-card-price">$${pkg.price.toLocaleString()}</div>
+                            <button class="compare-card-select ${inQuote ? 'selected' : ''}" onclick="selectFromCompare('${pkg.id}')">
+                                ${inQuote ? '✓ Added to Quote' : 'Select This Option'}
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            document.getElementById('compareModal').classList.add('open');
+        }
+
+        function closeCompareModal(e) {
+            if (!e || e.target === document.getElementById('compareModal')) {
+                document.getElementById('compareModal').classList.remove('open');
+            }
+        }
+
+        function selectFromCompare(packageId) {
+            // Add to quote if not already there
+            const inQuote = quote.some(item => item.id === packageId);
+            if (!inQuote) {
+                toggleQuote(packageId);
+            }
+
+            // Update the compare modal buttons
+            document.querySelectorAll('.compare-card-select').forEach(btn => {
+                btn.classList.remove('selected');
+                btn.textContent = 'Select This Option';
+            });
+
+            // Find the button for this package and update it
+            const tierGroup = getTierGroup(packageId);
+            if (tierGroup) {
+                const pkgIndex = tierGroup.packages.findIndex(p => p.id === packageId);
+                const buttons = document.querySelectorAll('.compare-card-select');
+                if (buttons[pkgIndex]) {
+                    buttons[pkgIndex].classList.add('selected');
+                    buttons[pkgIndex].textContent = '✓ Added to Quote';
+                }
+            }
+
+            showToast('Added to quote!', true);
         }
     </script>
 </body>
