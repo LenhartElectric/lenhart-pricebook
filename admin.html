@@ -890,6 +890,9 @@
                 categoryFilter.innerHTML += `<option value="${cat}">${cat}</option>`;
                 bulkCategory.innerHTML += `<option value="${cat}">${cat}</option>`;
             });
+            // Add Uncategorized option
+            categoryFilter.innerHTML += `<option value="Uncategorized">⊘ Uncategorized</option>`;
+            bulkCategory.innerHTML += `<option value="Uncategorized">⊘ Uncategorized</option>`;
 
             // Render categories
             const container = document.getElementById('categoriesContainer');
@@ -990,6 +993,7 @@
                         </select>
                         <select class="category-select" onchange="setCategory('${pkg.id}', this.value)">
                             ${allCategories.map(cat => `<option value="${cat}" ${cat === pkg.category ? 'selected' : ''}>${cat}</option>`).join('')}
+                            <option value="Uncategorized" ${pkg.category === 'Uncategorized' ? 'selected' : ''}>⊘ Uncategorized</option>
                         </select>
                     </div>
                     ${upsellTags}

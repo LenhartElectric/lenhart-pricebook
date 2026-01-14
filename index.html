@@ -1462,17 +1462,25 @@
         function renderApp() {
             document.getElementById('loading').style.display = 'none';
 
-            // Populate category dropdown
+            // Filter out Uncategorized from display
+            const visibleCategories = pricebookData.categories.filter(cat => cat.name !== 'Uncategorized');
+
+            // Populate category dropdown (excluding Uncategorized)
             const select = document.getElementById('categorySelect');
-            select.innerHTML = pricebookData.categories.map(cat =>
+            select.innerHTML = visibleCategories.map(cat =>
                 `<option value="${cat.name}">${cat.name}</option>`
             ).join('');
 
-            // Show first category
-            showCategory(pricebookData.categories[0].name);
+            // Show first visible category
+            if (visibleCategories.length > 0) {
+                showCategory(visibleCategories[0].name);
+            }
         }
 
         function showCategory(name) {
+            // Block showing Uncategorized
+            if (name === 'Uncategorized') return;
+
             currentCategory = name;
             document.getElementById('categorySelect').value = name;
             document.getElementById('searchResults').classList.remove('active');
@@ -1577,6 +1585,9 @@
 
             const results = [];
             pricebookData.categories.forEach(cat => {
+                // Skip Uncategorized packages in search
+                if (cat.name === 'Uncategorized') return;
+
                 cat.packages.forEach(pkg => {
                     if (pkg.name.toLowerCase().includes(query) ||
                         pkg.displayName.toLowerCase().includes(query) ||
